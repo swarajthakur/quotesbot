@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-
 class ToScrapeCSSSpider(scrapy.Spider):
     name = "toscrape-css"
     start_urls = [
@@ -18,5 +17,6 @@ class ToScrapeCSSSpider(scrapy.Spider):
 
         next_page_url = response.css("li.next > a::attr(href)").extract_first()
         if next_page_url is not None:
-            yield scrapy.Request(response.urljoin(next_page_url))
+            #yield scrapy.Request(response.urljoin(next_page_url))
+            yield response.follow(next_page_url, callback=self.parse)
 
